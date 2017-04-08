@@ -47,18 +47,18 @@ public class ChatTcpClient extends javax.swing.JFrame {
         ip = tfIp.getText().toString();
         port = Integer.parseInt(tfPort.getText());
         name = tfName.getText().toString();
-        
+
         try {
             s = new Socket(ip, port); //จะวิ่งไปที่ step 2 ของ server ที่รออยู่เพื่อทำงานต่อ
             waitMessage = new WaitMessage();
             waitMessage.start();
-            
+
             //first message connect
             out = new PrintWriter(s.getOutputStream()); //byte to character
 
-            out.println("c:"+name+": ");
+            out.println("c:" + name + ": ");
             out.flush(); //ดันให้หมดท่อ (ไม่มีอะไรค้างในท่อ)
-        
+
         } catch (IOException ex) {
             System.out.println("Connect error ioe : " + ex);
         }
@@ -79,7 +79,7 @@ public class ChatTcpClient extends javax.swing.JFrame {
             out = new PrintWriter(s.getOutputStream()); //byte to character
 
             //step 3 process
-            out.println("d");
+            out.println("d:" + name + ": ");
             out.flush(); //ดันให้หมดท่อ (ไม่มีอะไรค้างในท่อ)
         } catch (IOException ex) {
             System.out.println("*SendMessage error IOE : ");
@@ -89,12 +89,12 @@ public class ChatTcpClient extends javax.swing.JFrame {
 
     public void sendMessage() {
         String msg = tfMessage.getText().toString();
-        
+
         try {
             out = new PrintWriter(s.getOutputStream()); //byte to character
 
             //step 3 process
-            out.println("n:"+name+": "+msg);
+            out.println("n:" + name + ": " + msg);
             out.flush(); //ดันให้หมดท่อ (ไม่มีอะไรค้างในท่อ)
         } catch (IOException ex) {
             System.out.println("*SendMessage error IOE : ");
@@ -112,7 +112,7 @@ public class ChatTcpClient extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane2 = new javax.swing.JScrollPane();
-        luser = new javax.swing.JList<>();
+        luser = new javax.swing.JList<String>();
         lbStatus = new javax.swing.JLabel();
         tfMessage = new javax.swing.JTextField();
         btSend = new javax.swing.JButton();
@@ -236,7 +236,7 @@ public class ChatTcpClient extends javax.swing.JFrame {
                             .addComponent(btSend))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -382,7 +382,7 @@ public class ChatTcpClient extends javax.swing.JFrame {
                 while (true) {
                     sleep(1);
                     msg = in.readLine();
-                    System.out.println("Server echo: " + msg);
+                    model.addRow(new Object[]{msg});
                 }
 
             } catch (IOException ioe) {
