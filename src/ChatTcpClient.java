@@ -54,14 +54,11 @@ public class ChatTcpClient extends javax.swing.JFrame {
             waitMessage.start();
             
             //first message connect
-            
             out = new PrintWriter(s.getOutputStream()); //byte to character
 
-            out.println("c:"+name);
+            out.println("c:"+name+": ");
             out.flush(); //ดันให้หมดท่อ (ไม่มีอะไรค้างในท่อ)
         
-            
-            
         } catch (IOException ex) {
             System.out.println("Connect error ioe : " + ex);
         }
@@ -91,14 +88,13 @@ public class ChatTcpClient extends javax.swing.JFrame {
     }
 
     public void sendMessage() {
-        
         String msg = tfMessage.getText().toString();
         
         try {
             out = new PrintWriter(s.getOutputStream()); //byte to character
 
             //step 3 process
-            out.println(msg);
+            out.println("n:"+name+": "+msg);
             out.flush(); //ดันให้หมดท่อ (ไม่มีอะไรค้างในท่อ)
         } catch (IOException ex) {
             System.out.println("*SendMessage error IOE : ");
