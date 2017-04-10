@@ -68,21 +68,21 @@ public class ChatTcpClient extends javax.swing.JFrame {
     public void disconnect() {
 
         waitMessage.interrupt();
+
+//        try {
+        //out = new PrintWriter(s.getOutputStream()); //byte to character
+        //step 3 process
+        out.println("d:" + name + ":disconnect");
+        out.flush(); //ดันให้หมดท่อ (ไม่มีอะไรค้างในท่อ)
+//        } catch (IOException ex) {
+//            System.out.println("*SendMessage error IOE : ");
+//        }
+
         try {
             //step 4 close
             s.close();
         } catch (IOException ex) {
             System.out.println("Disconnect error ioe : " + ex);
-        }
-
-        try {
-            out = new PrintWriter(s.getOutputStream()); //byte to character
-
-            //step 3 process
-            out.println("d:" + name + ": ");
-            out.flush(); //ดันให้หมดท่อ (ไม่มีอะไรค้างในท่อ)
-        } catch (IOException ex) {
-            System.out.println("*SendMessage error IOE : ");
         }
 
     }
