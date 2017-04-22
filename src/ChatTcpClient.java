@@ -96,6 +96,8 @@ public class ChatTcpClient extends javax.swing.JFrame {
             //step 3 process
             out.println("n:" + name + ": " + msg);
             out.flush(); //ดันให้หมดท่อ (ไม่มีอะไรค้างในท่อ)
+            
+            tfMessage.setText("");
         } catch (IOException ex) {
             System.out.println("*SendMessage error IOE : ");
         }
